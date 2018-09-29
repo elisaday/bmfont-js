@@ -2,7 +2,14 @@
 
 用Electron制作的BMFont
 
-#### Build Setup
+---
+
+## 发布包下载
+[最新版本](https://github.com/elisaday/bmfont-js/releases/download/v1.0.0/bmfont-js.Setup.1.0.0.exe)
+
+遇到问题欢迎到Issus中讨论。
+
+## 运行方法
 
 ``` bash
 # install dependencies
@@ -11,15 +18,12 @@ npm install
 # serve with hot reload at localhost:9080
 npm run dev
 
-# build electron application for production
-npm run build
-
-
-# lint all JS/Vue component files in `src/`
-npm run lint
-
 ```
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+![支付宝](donate.png)
+
+欢迎使用支付宝扫描上方二维码进行捐赠，捐赠款项将用于后续开发和维护。
+
+谢谢关注
