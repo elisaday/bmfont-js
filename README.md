@@ -2,8 +2,10 @@
 
 [1]: https://api.travis-ci.org/elisaday/bmfont-js.svg?branch=master
 [2]: https://travis-ci.org/elisaday/bmfont-js
+[3]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
+[4]: https://standardjs.com
 
-[![Build Status][1]][2]
+[![Build Status][1]][2] [![JavaScript Style Guide][3]][4]
 
 用Electron制作的BMFont
 ===================================
