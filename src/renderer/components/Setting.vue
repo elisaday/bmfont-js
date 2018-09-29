@@ -27,8 +27,8 @@
 </template>
 
 <script>
-  import {remote} from 'electron'
-  import {mapMutations} from 'vuex'
+  import { remote } from 'electron'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'setting',

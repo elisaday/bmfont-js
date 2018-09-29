@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'bmp-list',
@@ -65,12 +65,12 @@
       ]),
 
       appendBMP (filePath, char) {
-        this.APPEND_BMP({filePath: filePath, char: char})
+        this.APPEND_BMP({ filePath: filePath, char: char })
         this.ON_PROJ_MODIFIED()
       },
 
       charChanged (index, event) {
-        this.CHANGE_CHAR({index: index, char: event.data})
+        this.CHANGE_CHAR({ index: index, char: event.data })
         this.ON_PROJ_MODIFIED()
       },
 

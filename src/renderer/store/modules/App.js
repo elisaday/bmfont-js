@@ -1,6 +1,6 @@
-import {remote} from 'electron'
+import { remote } from 'electron'
 import * as fs from 'fs'
-import {promisify} from 'util'
+import { promisify } from 'util'
 
 const writeFile = promisify(fs.writeFile)
 const readFile = promisify(fs.readFile)
@@ -15,7 +15,7 @@ async function saveProj (rootState, savePath) {
     setting: rootState.Setting,
     bmpList: rootState.BMPList
   }
-  await writeFile(savePath, JSON.stringify(save), {encoding: 'utf8'})
+  await writeFile(savePath, JSON.stringify(save), { encoding: 'utf8' })
 }
 
 async function openProj (commit) {
@@ -31,7 +31,7 @@ async function openProj (commit) {
   })[0]
 
   try {
-    let data = await readFile(projPath, {encoding: 'utf8'})
+    let data = await readFile(projPath, { encoding: 'utf8' })
     let json = JSON.parse(data)
     commit('LOAD', json)
     commit('ON_PROJ_SAVED', projPath)
@@ -90,7 +90,7 @@ const mutations = {
 }
 
 const actions = {
-  async NEW_PROJ ({commit, dispatch}) {
+  async NEW_PROJ ({ commit, dispatch }) {
     let choice = await checkProjModified()
     if (choice === 0) {
       await dispatch('SAVE_PROJ')
@@ -100,7 +100,7 @@ const actions = {
     }
   },
 
-  async OPEN_PROJ ({commit, dispatch}) {
+  async OPEN_PROJ ({ commit, dispatch }) {
     let choice = await checkProjModified()
     if (choice === 0) {
       await dispatch('SAVE_PROJ')
@@ -110,7 +110,7 @@ const actions = {
     }
   },
 
-  async SAVE_PROJ ({state, commit, rootState}) {
+  async SAVE_PROJ ({ state, commit, rootState }) {
     if (state.projPathName === null) return
     let savePath = remote.dialog.showSaveDialog({
       title: '保存BMFont工程',
@@ -124,7 +124,7 @@ const actions = {
     commit('ON_PROJ_SAVED', savePath)
   },
 
-  async CONFIRM_EXIT ({dispatch}) {
+  async CONFIRM_EXIT ({ dispatch }) {
     let choice = await checkProjModified()
     if (choice === 0) {
       await dispatch('SAVE_PROJ')

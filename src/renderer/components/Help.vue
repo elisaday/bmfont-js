@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {shell} from 'electron'
+  import { shell } from 'electron'
 
   export default {
     name: 'help',

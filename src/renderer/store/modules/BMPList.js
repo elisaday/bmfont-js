@@ -3,7 +3,7 @@ import Jimp from 'jimp/es'
 import * as path from 'path'
 import * as xmlbuilder from 'xmlbuilder'
 import * as fs from 'fs'
-import {promisify} from 'util'
+import { promisify } from 'util'
 
 const writeFile = promisify(fs.writeFile)
 
@@ -57,15 +57,15 @@ async function loadAllImages (bmpList) {
 
 async function saveFNT (blocks, bmpList, imgList, fntPath) {
   let doc = xmlbuilder.create('font')
-  let elem = doc.ele('chars', {'count': blocks.length})
+  let elem = doc.ele('chars', { 'count': blocks.length })
   for (let idx in blocks) {
     let block = blocks[idx].fit
     let char = bmpList[idx].char
     let bmp = imgList[idx].bitmap
-    elem.ele('char', {'id': char.charCodeAt(0), 'x': block.x, 'y': block.y, 'width': bmp.width, 'height': bmp.height, 'xadvance': bmp.width})
+    elem.ele('char', { 'id': char.charCodeAt(0), 'x': block.x, 'y': block.y, 'width': bmp.width, 'height': bmp.height, 'xadvance': bmp.width })
   }
-  let xml = elem.end({pretty: true})
-  await writeFile(fntPath, xml, {encoding: 'utf8'})
+  let xml = elem.end({ pretty: true })
+  await writeFile(fntPath, xml, { encoding: 'utf8' })
 }
 
 const mutations = {
@@ -75,7 +75,7 @@ const mutations = {
       if (save.bmpList !== undefined) {
         for (let bmp of save.bmpList) {
           if (bmp.filePath !== undefined && bmp.char !== undefined) {
-            state.bmpList.push({filePath: bmp.filePath, char: bmp.char})
+            state.bmpList.push({ filePath: bmp.filePath, char: bmp.char })
           }
         }
       }
@@ -86,8 +86,8 @@ const mutations = {
     state.bmpList = []
   },
 
-  APPEND_BMP (state, {filePath, char}) {
-    state.bmpList.push({filePath: filePath, char: char})
+  APPEND_BMP (state, { filePath, char }) {
+    state.bmpList.push({ filePath: filePath, char: char })
   },
 
   REMOVE_BMP (state, index) {
@@ -95,7 +95,7 @@ const mutations = {
     state.bmpList.splice(index, 1)
   },
 
-  CHANGE_CHAR (state, {index, char}) {
+  CHANGE_CHAR (state, { index, char }) {
     if (index < 0 || index >= state.bmpList.length) return
     state.bmpList[index].char = char
   },
@@ -110,7 +110,7 @@ const mutations = {
 }
 
 const actions = {
-  async PUBLISH ({state, rootState}) {
+  async PUBLISH ({ state, rootState }) {
     if (state.bmpList.length === 0) return
 
     let setting = rootState.Setting
