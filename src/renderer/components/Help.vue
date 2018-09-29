@@ -14,6 +14,12 @@
         切换到图片列表，编辑字符图片
       </p>
       <p>点击
+        <button class="btn btn-default">
+          <span class="icon icon-publish"></span>
+        </button>
+        发布字体配置和合并后的贴图
+      </p>
+      <p>点击
         <button class="btn btn-default" @click="onClickHelp">
           <span class="icon icon-help-circled"></span>
         </button>
@@ -56,7 +62,7 @@
       },      
 
       onClickGithub () {
-        shell.openExternal('https://github.com/elisaday/')
+        shell.openExternal('https://github.com/elisaday/bmfont-js')
       },
 
       onClickEmail () {
