@@ -1,9 +1,12 @@
 # bmfont-js
 
+[1]: https://api.travis-ci.org/elisaday/bmfont-js.svg?branch=master
+[2]: https://travis-ci.org/elisaday/bmfont-js
+
+[![Build Status][1]][2]
+
 用Electron制作的BMFont
-
----
-
+===================================
 ## 发布包下载
 [最新版本](https://github.com/elisaday/bmfont-js/releases/download/v1.0.0/bmfont-js.Setup.1.0.0.exe)
 
