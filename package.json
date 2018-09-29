@@ -53,6 +53,11 @@
       "icon": "build/icons"
     }
   },
+  "standard": {
+    "ignore": [
+      "src/renderer/assets/**"
+    ]
+  },
   "dependencies": {
     "jimp": "^0.5.3",
     "vue": "^2.5.16",

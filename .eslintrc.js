@@ -16,9 +16,9 @@ module.exports = {
     'html'
   ],
   'rules': {
-    "no-new": 0,
-    "no-trailing-spaces": 0,
-    "comma-dangle": 0,
+    // "no-new": 0,
+    // "no-trailing-spaces": 0,
+    // "comma-dangle": 0,
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await

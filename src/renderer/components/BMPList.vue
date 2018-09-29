@@ -81,7 +81,7 @@
 
       onClickHeaderImgFile () {
         this.ORDER_BY_PATH()
-      },
+      }
     }
   }
 </script>

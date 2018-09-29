@@ -46,7 +46,7 @@
     name: 'help',
     mounted () {
     },
-    computed: {      
+    computed: {
     },
     methods: {
       onClickBMPList () {
@@ -59,7 +59,7 @@
 
       onClickHelp () {
         this.$router.push('help')
-      },      
+      },
 
       onClickGithub () {
         shell.openExternal('https://github.com/elisaday/bmfont-js')

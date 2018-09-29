@@ -37,44 +37,44 @@
     computed: {
       npower2: {
         get () { return this.$store.state.Setting.NPower2 },
-        set (value) { 
-          this.ENABLE_NPOWER2(value) 
+        set (value) {
+          this.ENABLE_NPOWER2(value)
           this.ON_PROJ_MODIFIED()
         }
       },
       sameWH: {
         get () { return this.$store.state.Setting.sameWH },
-        set (value) { 
-          this.ENABLE_SAME_WH(value) 
+        set (value) {
+          this.ENABLE_SAME_WH(value)
           this.ON_PROJ_MODIFIED()
         }
       },
       padding: {
         get () { return this.$store.state.Setting.padding },
-        set (value) { 
-          this.SET_PADDING(value) 
+        set (value) {
+          this.SET_PADDING(value)
           this.ON_PROJ_MODIFIED()
         }
       },
       outputPath: {
         get () { return this.$store.state.Setting.outputPath },
-        set (value) { 
-          this.SET_OUTPUT_PATH(value) 
+        set (value) {
+          this.SET_OUTPUT_PATH(value)
           this.ON_PROJ_MODIFIED()
         }
-      },      
+      },
       packAlgo: {
         get () { return this.$store.state.Setting.packAlgo },
-        set (value) { 
-          this.SET_PACK_ALGO(value) 
+        set (value) {
+          this.SET_PACK_ALGO(value)
           this.ON_PROJ_MODIFIED()
         }
-      },            
+      }
     },
     methods: {
       ...mapMutations([
         'ENABLE_NPOWER2', 'ENABLE_SAME_WH', 'SET_PADDING', 'SET_OUTPUT_PATH', 'SET_PACK_ALGO', 'SET_OUTPUT_PATH', 'ON_PROJ_MODIFIED'
-      ]),      
+      ]),
 
       onClickBrowseOutputPath () {
         let pngSavePath = remote.dialog.showSaveDialog({

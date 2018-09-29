@@ -64,7 +64,7 @@
       holder.ondrop = (e) => {
         e.preventDefault()
         e.stopPropagation()
-      }    
+      }
     },
     computed: {
       ...mapState({
@@ -107,7 +107,7 @@
       },
 
       onClickExit () {
-        this.$store.dispatch('CONFIRM_EXIT')          
+        this.$store.dispatch('CONFIRM_EXIT')
       }
     }
   }

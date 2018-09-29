@@ -112,7 +112,7 @@ const mutations = {
 const actions = {
   async PUBLISH ({state, rootState}) {
     if (state.bmpList.length === 0) return
-    
+
     let setting = rootState.Setting
     try {
       let imgList = await loadAllImages(state.bmpList)
