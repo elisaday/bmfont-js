@@ -1,0 +1,21 @@
+{
+	"editor.insertSpaces": true,
+	"editor.tabSize": 2,
+	"editor.fontFamily": "CamingoCode",
+	"standard.autoFixOnSave": true,
+
+	"standard.validate": [
+		"javascript",
+		"javascriptreact",
+		{
+			"language": "html",
+			"autoFix": true
+		}
+	],
+	"standard.options": {
+		"plugins": ["html"]
+	},
+	"files.associations": {
+		"*.vue": "html"
+	},
+}
