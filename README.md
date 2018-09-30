@@ -8,11 +8,18 @@
 [![Build Status][1]][2] [![JavaScript Style Guide][3]][4]
 
 用Electron制作的BMFont
-===================================
+===
+
 ## 发布包下载
 [最新版本](https://github.com/elisaday/bmfont-js/releases/download/v1.0.0/bmfont-js.Setup.1.0.0.exe)
 
 遇到问题欢迎到Issus中讨论。
+===
+
+## 使用方法
+
+![使用方法](images/usage.png)
+===
 
 ## 运行方法
 
@@ -25,7 +32,7 @@ npm run dev
 
 ```
 
----
+-----------------
 
 ![支付宝](donate.png)
 
