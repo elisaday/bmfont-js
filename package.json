@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "zeb <zebbey@gmail.com>",
   "description": "bitmap font generator",
-  "license": null,
+  "license": "see LICENSE file",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",

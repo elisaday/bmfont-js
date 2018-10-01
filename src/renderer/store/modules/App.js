@@ -28,7 +28,10 @@ async function openProj (commit) {
       { name: 'BMFont Project File', extensions: ['bfp'] },
       { name: 'All Files', extensions: ['*'] }
     ]
-  })[0]
+  })
+  if (projPath === undefined) return
+
+  projPath = projPath[0]
 
   try {
     let data = await readFile(projPath, { encoding: 'utf8' })

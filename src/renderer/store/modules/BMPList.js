@@ -1,4 +1,6 @@
+import { remote } from 'electron'
 import GrowingPacker from '../../assets/bin-packing/packer.growing.js'
+import Packer from '../../assets/bin-packing/packer.js'
 import Jimp from 'jimp/es'
 import * as path from 'path'
 import * as xmlbuilder from 'xmlbuilder'
@@ -11,39 +13,51 @@ const state = {
   bmpList: []
 }
 
-function packingImages (imgList, padding) {
-  let packer = new GrowingPacker()
-  let blocks = []
-  for (let img of imgList) {
-    blocks.push({ w: img.bitmap.width + padding, h: img.bitmap.height + padding })
+function calculateSize (w, h, setting) {
+  if (setting.NPower2) {
+    [w, h] = expandSize(w, h)
   }
-  packer.fit(blocks)
-  return blocks
+  if (setting.sameWH) {
+    let s = Math.max(w, h)
+    w = s
+    h = s
+  }
+  return [w, h]
 }
 
-function expandSize (size) {
-  let w = 2 ** Math.ceil(Math.log(size.w) / Math.log(2))
-  let h = 2 ** Math.ceil(Math.log(size.h) / Math.log(2))
-  return { w: w, h: h }
+function packingImages (imgList, setting) {
+  let packer
+  let w, h
+  if (setting.autoSize) {
+    packer = new GrowingPacker()
+  } else {
+    [w, h] = calculateSize(setting.textureWidth, setting.textureHeight, setting)
+    packer = new Packer(w, h)
+  }
+  let blocks = []
+  for (let img of imgList) {
+    blocks.push({ w: img.bitmap.width + setting.padding, h: img.bitmap.height + setting.padding })
+  }
+  packer.fit(blocks)
+  if (setting.autoSize) {
+    [w, h] = calculateSize(packer.root.w, packer.root.h, setting)
+  }
+  return [blocks, w, h]
+}
+
+function expandSize (w, h) {
+  w = 2 ** Math.ceil(Math.log(w) / Math.log(2))
+  h = 2 ** Math.ceil(Math.log(h) / Math.log(2))
+  return [w, h]
 }
 
 function validateBlocks (blocks) {
   for (let b of blocks) {
     if (!b.fit || !b.fit.used) {
-      throw b
+      return false
     }
   }
-}
-
-function calculateSize (blocks) {
-  let maxWidth = 0
-  let maxHeight = 0
-  for (let idx in blocks) {
-    let block = blocks[idx]
-    if (block.fit.x + block.fit.w > maxWidth) maxWidth = block.fit.x + block.fit.w
-    if (block.fit.y + block.fit.h > maxHeight) maxHeight = block.fit.y + block.fit.h
-  }
-  return { w: maxWidth, h: maxHeight }
+  return true
 }
 
 async function loadAllImages (bmpList) {
@@ -116,14 +130,15 @@ const actions = {
     let setting = rootState.Setting
     try {
       let imgList = await loadAllImages(state.bmpList)
-      let blocks = packingImages(imgList, setting.padding)
-      validateBlocks(blocks)
+      let [blocks, w, h] = packingImages(imgList, setting)
+      if (!validateBlocks(blocks)) {
+        remote.dialog.showErrorBox('', '贴图太小了，不能容纳所有的字符')
+        return
+      }
 
-      let size = calculateSize(blocks)
-      if (setting.NPower2) size = expandSize(size)
-      console.log(size)
+      console.log(w, h)
 
-      let resultImg = await new Jimp(size.w, size.h)
+      let resultImg = await new Jimp(w, h)
       for (let idx in blocks) {
         let block = blocks[idx]
         let img = imgList[idx]
@@ -134,7 +149,8 @@ const actions = {
       let fntPath = setting.outputPath.substring(0, setting.outputPath.length - ext.length) + '.xml'
       saveFNT(blocks, state.bmpList, imgList, fntPath)
     } catch (e) {
-      console.log(e)
+      console.dir(e)
+      remote.dialog.showErrorBox('', '请检查字符图片文件是否正确\n' + e.message)
     }
   }
 }
