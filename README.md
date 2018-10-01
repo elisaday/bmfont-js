@@ -12,7 +12,7 @@
 ---
 
 ## 发布包下载
-[最新版本](https://github.com/elisaday/bmfont-js/releases/download/v1.0.0/bmfont-js.Setup.1.0.0.exe)
+[最新版本](https://github.com/elisaday/bmfont-js/releases/download/1.0.1/bmfont-js.Setup.1.0.1.exe)
 
 遇到问题欢迎到Issus中讨论。
 
