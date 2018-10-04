@@ -1,10 +1,10 @@
 <template>
   <div class="window-content">
     <div class="pane-group" id="dropArea">
-      <div class="tip" :style="{display: tipShow}">
+      <div class="tip" v-if="emptyBMPList">
         <p>把文字图片拖放到这里</p>
       </div>
-      <table class="table-striped" :style="{display: tipHide}">
+      <table class="table-striped" v-if="!emptyBMPList">
         <thead>
           <tr>
             <th @click="onClickHeaderImgFile">图片文件</th>
@@ -52,11 +52,8 @@
       setting () {
         return this.$store.state.Setting
       },
-      tipShow () {
-        return this.bmpList.length === 0 ? '' : 'none'
-      },
-      tipHide () {
-        return this.bmpList.length === 0 ? 'none' : ''
+      emptyBMPList () {
+        return this.bmpList.length === 0
       }
     },
     methods: {

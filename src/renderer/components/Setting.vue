@@ -11,7 +11,7 @@
     <div class="control-row checkbox">
       <label><input type="checkbox" v-model="autoSize">自动处理合并后贴图大小</label>
     </div>
-    <div class="control-row" :style="{display: sizeHide}">
+    <div class="control-row" v-if="!autoSize">
       <label class="control-item">宽：</label>
       <input class="form-control control-item" type="number" v-model="textureWidth" style="width: 80px">
       <span></span>
@@ -46,9 +46,6 @@
     mounted () {
     },
     computed: {
-      sizeHide () {
-        return this.autoSize ? 'none' : ''
-      },
       textureWidth: {
         get () { return this.$store.state.Setting.textureWidth },
         set (value) {
