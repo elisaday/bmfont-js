@@ -83,34 +83,34 @@
   
   .container {
     flex-grow: 1;
-
-    p {
-      font-size: 1.2em;
-    }
   }
 
+  .container p {
+    font-size: 1.2em;
+  }
+  
   .copyright {
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
     font-size: 1.2em;
-
-    img {
-      border-radius: 3em;
-      width: 6em;
-      height: auto;
-    }
-
-    .link {
-      padding: 0 5px;
-      color: #555;
-    }
-
-    .link:hover {
-      border-radius: 4px;
-      color: #444;
-      background: #eee;
-    }
   }
 
+  .copyright img {
+    border-radius: 3em;
+    width: 6em;
+    height: auto;
+  }
+
+  .copyright .link {
+    padding: 0 5px;
+    color: #555;
+  }
+
+  .copyright .link:hover {
+    border-radius: 4px;
+    color: #444;
+    background: #eee;
+  }
+  
 </style>

@@ -91,16 +91,17 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-
-    p {
-      border-style: dashed;
-      border-color: #aaa;
-      border-radius: 10px;
-      padding: 20px;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #888;
-    }
   }
+
+  .tip p {
+    border-style: dashed;
+    border-color: #aaa;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #888;
+  }
+    
 </style>
 
