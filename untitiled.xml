@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<font>
+  <chars count="11">
+    <char id="43" x="0" y="0" width="85" height="137" xadvance="85"/>
+    <char id="48" x="86" y="0" width="85" height="137" xadvance="85"/>
+    <char id="49" x="172" y="0" width="85" height="137" xadvance="85"/>
+    <char id="50" x="258" y="0" width="85" height="137" xadvance="85"/>
+    <char id="51" x="0" y="138" width="85" height="137" xadvance="85"/>
+    <char id="52" x="86" y="138" width="85" height="137" xadvance="85"/>
+    <char id="53" x="172" y="138" width="85" height="137" xadvance="85"/>
+    <char id="54" x="258" y="138" width="85" height="137" xadvance="85"/>
+    <char id="55" x="344" y="0" width="85" height="137" xadvance="85"/>
+    <char id="56" x="344" y="138" width="85" height="137" xadvance="85"/>
+    <char id="57" x="0" y="276" width="85" height="137" xadvance="85"/>
+  </chars>
+</font>

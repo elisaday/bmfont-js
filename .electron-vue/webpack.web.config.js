@@ -5,7 +5,7 @@ process.env.BABEL_ENV = 'web'
 const path = require('path')
 const webpack = require('webpack')
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const MinifyPlugin = require("babel-minify-webpack-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -73,19 +73,30 @@ let webConfig = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
             limit: 10000,
-            name: 'imgs/[name].[ext]'
+            name: 'imgs/[name].[ext]',
+            esModule: false,
           }
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'media/[name]--[folder].[ext]',
+          esModule: false,
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
             limit: 10000,
-            name: 'fonts/[name].[ext]'
+            name: 'fonts/[name].[ext]',
+            esModule: false,
           }
         }
       }
@@ -131,14 +142,22 @@ if (process.env.NODE_ENV === 'production') {
   webConfig.devtool = ''
 
   webConfig.plugins.push(
-    new BabiliWebpackPlugin(),
-    new CopyWebpackPlugin([
+    new MinifyPlugin(),
+    new CopyWebpackPlugin(
       {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/web/static'),
-        ignore: ['.*']
+        patterns: [
+          {
+            from: path.join(__dirname, '../static'),
+            to: path.join(__dirname, '../dist/web/static'),
+            globOptions: {
+              dot: true,
+              gitignore: true,
+              ignore: [".*"],
+            },
+          }
+        ]
       }
-    ]),
+    ),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),

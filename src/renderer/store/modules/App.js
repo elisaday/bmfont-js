@@ -11,7 +11,7 @@ const state = {
 }
 
 async function saveProj (rootState, savePath) {
-  let save = {
+  const save = {
     setting: rootState.Setting,
     bmpList: rootState.BMPList
   }
@@ -34,8 +34,8 @@ async function openProj (commit) {
   projPath = projPath[0]
 
   try {
-    let data = await readFile(projPath, { encoding: 'utf8' })
-    let json = JSON.parse(data)
+    const data = await readFile(projPath, { encoding: 'utf8' })
+    const json = JSON.parse(data)
     commit('LOAD', json)
     commit('ON_PROJ_SAVED', projPath)
   } catch (e) {
@@ -45,7 +45,7 @@ async function openProj (commit) {
 
 async function checkProjModified () {
   if (state.modified) {
-    let choice = remote.dialog.showMessageBox({
+    const choice = remote.dialog.showMessageBox({
       type: 'question',
       title: 'BMFont.js',
       message: '工程已经更改，是否保存当前工程？',
@@ -60,7 +60,7 @@ async function checkProjModified () {
 }
 
 function confirmExit () {
-  let choice = remote.dialog.showMessageBox({
+  const choice = remote.dialog.showMessageBox({
     type: 'question',
     title: 'BMFont.js',
     message: '确定要退出吗？',
@@ -94,7 +94,7 @@ const mutations = {
 
 const actions = {
   async NEW_PROJ ({ commit, dispatch }) {
-    let choice = await checkProjModified()
+    const choice = await checkProjModified()
     if (choice === 0) {
       await dispatch('SAVE_PROJ')
       commit('ON_NEW_PROJ')
@@ -104,7 +104,7 @@ const actions = {
   },
 
   async OPEN_PROJ ({ commit, dispatch }) {
-    let choice = await checkProjModified()
+    const choice = await checkProjModified()
     if (choice === 0) {
       await dispatch('SAVE_PROJ')
       openProj(commit)
@@ -115,7 +115,7 @@ const actions = {
 
   async SAVE_PROJ ({ state, commit, rootState }) {
     if (state.projPathName === null) return
-    let savePath = remote.dialog.showSaveDialog({
+    const savePath = remote.dialog.showSaveDialog({
       title: '保存BMFont工程',
       filters: [
         { name: 'BMFont Project File', extensions: ['bfp'] },
@@ -128,7 +128,7 @@ const actions = {
   },
 
   async CONFIRM_EXIT ({ dispatch }) {
-    let choice = await checkProjModified()
+    const choice = await checkProjModified()
     if (choice === 0) {
       await dispatch('SAVE_PROJ')
       confirmExit()

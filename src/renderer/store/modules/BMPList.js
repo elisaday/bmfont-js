@@ -1,11 +1,11 @@
 import { remote } from 'electron'
-import GrowingPacker from '../../assets/bin-packing/packer.growing.js'
-import Packer from '../../assets/bin-packing/packer.js'
-import Jimp from 'jimp/es'
+import GrowingPacker from '@/assets/bin-packing/packer.growing.js'
+import Packer from '@/assets/bin-packing/packer.js'
 import * as path from 'path'
 import * as xmlbuilder from 'xmlbuilder'
 import * as fs from 'fs'
 import { promisify } from 'util'
+import Jimp from 'jimp/es'
 
 const writeFile = promisify(fs.writeFile)
 
@@ -18,7 +18,7 @@ function calculateSize (w, h, setting) {
     [w, h] = expandSize(w, h)
   }
   if (setting.sameWH) {
-    let s = Math.max(w, h)
+    const s = Math.max(w, h)
     w = s
     h = s
   }
@@ -34,8 +34,8 @@ function packingImages (imgList, setting) {
     [w, h] = calculateSize(setting.textureWidth, setting.textureHeight, setting)
     packer = new Packer(w, h)
   }
-  let blocks = []
-  for (let img of imgList) {
+  const blocks = []
+  for (const img of imgList) {
     blocks.push({ w: img.bitmap.width + setting.padding, h: img.bitmap.height + setting.padding })
   }
   packer.fit(blocks)
@@ -52,7 +52,7 @@ function expandSize (w, h) {
 }
 
 function validateBlocks (blocks) {
-  for (let b of blocks) {
+  for (const b of blocks) {
     if (!b.fit || !b.fit.used) {
       return false
     }
@@ -61,24 +61,24 @@ function validateBlocks (blocks) {
 }
 
 async function loadAllImages (bmpList) {
-  let imgList = []
-  for (let bmp of bmpList) {
-    let img = await Jimp.read(bmp.filePath)
+  const imgList = []
+  for (const bmp of bmpList) {
+    const img = await Jimp.read(bmp.filePath)
     imgList.push(img)
   }
   return imgList
 }
 
 async function saveFNT (blocks, bmpList, imgList, fntPath) {
-  let doc = xmlbuilder.create('font')
-  let elem = doc.ele('chars', { 'count': blocks.length })
-  for (let idx in blocks) {
-    let block = blocks[idx].fit
-    let char = bmpList[idx].char
-    let bmp = imgList[idx].bitmap
-    elem.ele('char', { 'id': char.charCodeAt(0), 'x': block.x, 'y': block.y, 'width': bmp.width, 'height': bmp.height, 'xadvance': bmp.width })
+  const doc = xmlbuilder.create('font')
+  const elem = doc.ele('chars', { count: blocks.length })
+  for (const idx in blocks) {
+    const block = blocks[idx].fit
+    const char = bmpList[idx].char
+    const bmp = imgList[idx].bitmap
+    elem.ele('char', { id: char.charCodeAt(0), x: block.x, y: block.y, width: bmp.width, height: bmp.height, xadvance: bmp.width })
   }
-  let xml = elem.end({ pretty: true })
+  const xml = elem.end({ pretty: true })
   await writeFile(fntPath, xml, { encoding: 'utf8' })
 }
 
@@ -87,7 +87,7 @@ const mutations = {
     save = save.bmpList
     if (save !== undefined) {
       if (save.bmpList !== undefined) {
-        for (let bmp of save.bmpList) {
+        for (const bmp of save.bmpList) {
           if (bmp.filePath !== undefined && bmp.char !== undefined) {
             state.bmpList.push({ filePath: bmp.filePath, char: bmp.char })
           }
@@ -127,26 +127,24 @@ const actions = {
   async PUBLISH ({ state, rootState }) {
     if (state.bmpList.length === 0) return
 
-    let setting = rootState.Setting
+    const setting = rootState.Setting
     try {
-      let imgList = await loadAllImages(state.bmpList)
-      let [blocks, w, h] = packingImages(imgList, setting)
+      const imgList = await loadAllImages(state.bmpList)
+      const [blocks, w, h] = packingImages(imgList, setting)
       if (!validateBlocks(blocks)) {
         remote.dialog.showErrorBox('', '贴图太小了，不能容纳所有的字符')
         return
       }
 
-      console.log(w, h)
-
-      let resultImg = await new Jimp(w, h)
-      for (let idx in blocks) {
-        let block = blocks[idx]
-        let img = imgList[idx]
+      const resultImg = await new Jimp(w, h)
+      for (const idx in blocks) {
+        const block = blocks[idx]
+        const img = imgList[idx]
         resultImg.composite(img, block.fit.x, block.fit.y)
       }
       await resultImg.write(setting.outputPath)
-      let ext = path.extname(setting.outputPath)
-      let fntPath = setting.outputPath.substring(0, setting.outputPath.length - ext.length) + '.xml'
+      const ext = path.extname(setting.outputPath)
+      const fntPath = setting.outputPath.substring(0, setting.outputPath.length - ext.length) + '.xml'
       saveFNT(blocks, state.bmpList, imgList, fntPath)
     } catch (e) {
       console.dir(e)

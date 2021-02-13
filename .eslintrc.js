@@ -1,21 +1,26 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: 'babel-eslint',
     sourceType: 'module'
   },
   env: {
     browser: true,
     node: true
   },
-  extends: 'standard',
+  extends: [
+    'plugin:vue/recommended',
+    'standard'
+  ],
   globals: {
     __static: true
   },
   plugins: [
-    'html'
+    'vue'
   ],
-  'rules': {
+  rules: {
+    'no-async-promise-executor': 0,
     // "no-new": 0,
     // "no-trailing-spaces": 0,
     // "comma-dangle": 0,

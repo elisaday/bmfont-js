@@ -6,7 +6,7 @@ const path = require('path')
 const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const MinifyPlugin = require("babel-minify-webpack-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -89,7 +89,8 @@ let rendererConfig = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
+            esModule: false,
             limit: 10000,
             name: 'imgs/[name]--[folder].[ext]'
           }
@@ -100,16 +101,18 @@ let rendererConfig = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'media/[name]--[folder].[ext]'
+          name: 'media/[name]--[folder].[ext]',
+          esModule: false,
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
             limit: 10000,
-            name: 'fonts/[name]--[folder].[ext]'
+            name: 'fonts/[name]--[folder].[ext]',
+            esModule: false,
           }
         }
       }
@@ -170,14 +173,22 @@ if (process.env.NODE_ENV === 'production') {
   rendererConfig.devtool = ''
 
   rendererConfig.plugins.push(
-    new BabiliWebpackPlugin(),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/electron/static'),
-        ignore: ['.*']
+    new MinifyPlugin(),
+    new CopyWebpackPlugin(
+      { 
+        patterns: [
+          { 
+            from: path.join(__dirname, '../static'), 
+            to: path.join(__dirname, '../dist/electron/static'),
+            globOptions: {
+              dot: true,
+              gitignore: true,
+              ignore: [".*"],
+            },
+          },
+        ]
       }
-    ]),
+    ),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),

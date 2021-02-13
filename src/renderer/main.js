@@ -5,6 +5,10 @@ import App from './App'
 import routes from './router'
 import store from './store'
 
+import '@/assets/photon/css/photon.css'
+
+const process = require('process')
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
