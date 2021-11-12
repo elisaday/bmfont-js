@@ -82,6 +82,12 @@ import * as path from 'path'
 export default {
   name: 'BmfontJs',
 
+  data () {
+    return {
+      currentTab: null
+    }
+  },
+
   computed: {
     ...mapState({
       projPathName: state => state.App.projPathName,
@@ -119,16 +125,22 @@ export default {
       this.$store.dispatch('SAVE_PROJ')
     },
 
+    pushPage (path) {
+      if (this.$router.history.current.path !== path) {
+        this.$router.push(path)
+      }
+    },
+
     onClickBMPList () {
-      this.$router.push('bmp-list')
+      this.pushPage('/bmp-list')
     },
 
     onClickSetting () {
-      this.$router.push('setting')
+      this.pushPage('/setting')
     },
 
     onClickHelp () {
-      this.$router.push('help')
+      this.pushPage('/help')
     },
 
     onClickPublish () {
